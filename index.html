@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3b82f6">
+<title>Garmin Dashboard</title>
+
+<style>
+
+
+body {
+    font-family: Segoe UI, Arial, sans-serif;
+    background:#eef2f7;
+    padding:30px;
+    color:#111827;
+}
+
+
+
+h1 {
+    margin-bottom:20px;
+}
+
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    align-items:start;
+}
+
+.card {
+    background:white;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:transform .2s;
+}
+
+.card:hover {
+    transform:translateY(-3px);
+}
+
+
+
+.value {
+    font-size:42px;
+    font-weight:700;
+    margin-top:12px;
+}
+
+.chart-card {
+    max-width:900px;
+    margin:20px auto;
+    padding:30px;
+}
+
+.pie-card {
+    max-width:500px;
+    margin:20px auto;
+}
+
+
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+
+<body>
+
+<h1>Marco's Garmin Dashboard</h1>
+<p>
+Triathlon • Obiettivo: mantenermi in forma • Focus: FC ≤ 120 bpm
+</p>
+
+
+<div class="grid">
+
+<div class="card">
+<div>Attività Totali</div>
+<div class="value">3538</div>
+</div>
+
+<div class="card">
+<div>Distanza Totale</div>
+<div class="value">58934 km</div>
+</div>
+
+<div class="card">
+<div>FC Media</div>
+<div class="value">132.2 bpm</div>
+</div>
+
+
+<div class="card">
+<div>Allenamenti ≤120 bpm</div>
+<div class="value">31.7%</div>
+</div>
+
+<div class="card">
+<div>🏃 Km Corsa</div>
+<div class="value">21464</div>
+</div>
+
+<div class="card">
+<div>🚴 Km Bici</div>
+<div class="value">35035</div>
+</div>
+
+<div class="card">
+<div>🏊 Km Nuoto</div>
+<div class="value">1721</div>
+</div>
+
+<div class="card">
+<div>📉 Differenza</div>
+<div class="value">-27.9 bpm</div>
+</div>
+
+
+</div>
+
+</div>
+
+<h2>Ultimi 7 giorni</h2>
+
+<div class="grid">
+
+<div class="card">
+<div>🏃 Corsa</div>
+<div class="value">26 km</div>
+</div>
+
+<div class="card">
+<div>🚴 Bici</div>
+<div class="value">101 km</div>
+</div>
+
+<div class="card">
+<div>🏊 Nuoto</div>
+<div class="value">3 km</div>
+</div>
+
+<div class="card">
+<div>📅 Allenamenti</div>
+<div class="value">5</div>
+</div>
+
+</div>
+
+<h2>Ultimi 30 giorni</h2>
+
+<div class="grid">
+
+<div class="card">
+<div>🏃 Corsa</div>
+<div class="value">93 km</div>
+</div>
+
+<div class="card">
+<div>🚴 Bici</div>
+<div class="value">314 km</div>
+</div>
+
+<div class="card">
+<div>🏊 Nuoto</div>
+<div class="value">8 km</div>
+</div>
+<div class="card">
+<div>📅 Allenamenti</div>
+<div class="value">18</div>
+</div>
+
+<div class="card">
+<div>❤️ FC Media</div>
+<div class="value">104.3 bpm</div>
+</div>
+
+<div class="card">
+<div>🎯🎯 Allenamenti ≤120 bpm </div>
+<div class="value">94.4%</div>
+</div>
+</div>
+
+<h2>Ultimi 90 giorni</h2>
+
+<div class="grid">
+
+<div class="card">
+<div>🏃 Corsa</div>
+<div class="value">104 km</div>
+</div>
+
+<div class="card">
+<div>🚴 Bici</div>
+<div class="value">954 km</div>
+</div>
+
+<div class="card">
+<div>🏊 Nuoto</div>
+<div class="value">32 km</div>
+</div>
+
+<div class="card">
+<div>📅 Allenamenti</div>
+<div class="value">41</div>
+</div>
+
+</div>
+
+<h2>Frequenza Cardiaca</h2>
+
+<div class="grid">
+
+<div class="card">
+<div>❤️ Storico</div>
+<div class="value">132.2 bpm</div>
+</div>
+
+<div class="card">
+<div>❤️ Ultimi 30 giorni</div>
+<div class="value">104.3 bpm</div>
+</div>
+
+<div class="card">
+<div>📅 Mese Corrente</div>
+<div class="value">112.0 bpm</div>
+</div>
+
+<div class="card">
+<div>📉 Differenza</div>
+<div class="value">-27.9 bpm</div>
+</div>
+
+</div>
+
+<h2>Volume Ultime 12 Settimane</h2>
+
+<div class="card chart-card">
+    <canvas id="weeklyChart" height="25"></canvas>
+</div>
+
+<h2>FC Media Ultimi 30 Giorni</h2>
+
+<div class="card chart-card">
+    <canvas id="hr30dayChart" height="120"></canvas>
+</div>
+
+<h2>FC Media Ultimi 12 Mesi</h2>
+
+
+<div class="card chart-card">
+    <canvas id="hrChart" height="120"></canvas>
+</div>
+
+<h2>Distribuzione Km Ultimi 30 Giorni</h2>
+
+<div class="card chart-card">
+<canvas id="sportChart" height="180"></canvas>
+</div>
+
+<script>
+
+const labels = ["Corsa", "Bici", "Nuoto"];
+const values = [93.2, 314.0, 8.4];
+
+const weekLabels = ["2026-W33", "2026-W34", "2026-W35", "2026-W36", "2026-W37", "2026-W38", "2026-W39", "2026-W40", "2026-W41", "2026-W42", "2026-W43", "2026-W44"];
+const weekValues = [3.0, 166.7, 113.4, 225.3, 3.3, 82.5, 2.5, 82.5, 88.9, 108.3, 79.8, 129.6];
+
+const monthLabels = ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09", "2026-10", "2026-11"];
+
+const dailyLabels = ["01/11", "03/10", "06/10", "10/10", "11/10", "13/10", "14/10", "16/10", "17/10", "18/10", "21/10", "23/10", "24/10", "25/10", "27/10", "29/10", "30/10", "31/10"];
+
+const dailyRun = [null, 90.0, 100.0, null, 101.0, 101.0, 111.0, 115.0, null, null, 113.0, 120.0, null, null, 125.0, 112.0, 118.0, null];
+const dailyBike = [112.0, null, null, 89.0, null, null, null, null, null, 85.0, null, null, null, 89.0, null, null, null, null];
+const dailySwim = [null, null, null, null, null, null, null, null, 100.0, null, null, null, 94.0, null, null, null, null, 102.0];
+
+const hr30Labels = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"];
+
+const runHr30 = [118.0, 112.0, 125.0, 120.0, 113.0, 115.0, 111.0, 101.0, 101.0, 100.0, 90.0];
+const bikeHr30 = [112.0, 89.0, 85.0, 89.0];
+const swimHr30 = [102.0, 94.0, 100.0];
+
+const runValues = [128.8, 104.0, null, 132.0, 133.9, 131.8, null, null, null, 93.0, 109.6, null];
+const bikeValues = [113.3, 109.4, 113.0, 110.2, 104.6, 106.7, 117.0, 110.0, 88.3, 91.5, 89.2, 112.0];
+const swimValues = [111.4, 113.9, 111.2, 110.7, 104.8, 106.9, 117.5, 114.1, 118.2, 104.0, 98.7, null];
+
+new Chart(
+document.getElementById('weeklyChart'),
+{
+type:'line',
+data:{
+labels:weekLabels,
+datasets:[{
+label:'Km settimanali',
+data:weekValues,
+borderColor:'#3b82f6',
+backgroundColor:'#3b82f6',
+tension:0.3,
+fill:false
+}]
+},
+options:{
+responsive:true,
+plugins:{
+legend:{
+display:false
+}
+},
+scales:{
+y:{
+beginAtZero:false
+}
+}
+}
+}
+);
+new Chart(
+document.getElementById('hr30dayChart'),
+{
+type:'line',
+data:{
+labels:dailyLabels,
+datasets:[
+{
+label:'Corsa',
+data:dailyRun,
+borderColor:'#3b82f6',
+borderWidth:3
+},
+{
+label:'Bici',
+data:dailyBike,
+borderColor:'#22c55e',
+borderWidth:3
+},
+{
+label:'Nuoto',
+data:dailySwim,
+borderColor:'#f59e0b',
+borderWidth:3
+}
+]
+},
+options:{
+responsive:true,
+maintainAspectRatio:false
+}
+}
+);
+new Chart(
+document.getElementById('hrChart'),
+{
+type:'line',
+data:{
+labels:monthLabels,
+datasets:[
+{
+label:'Corsa',
+data:runValues,
+borderColor:'#3b82f6',
+borderWidth:3
+},
+{
+label:'Bici',
+data:bikeValues,
+borderColor:'#22c55e',
+borderWidth:3
+},
+{
+label:'Nuoto',
+data:swimValues,
+borderColor:'#f59e0b',
+borderWidth:3
+} 
+]
+},
+options:{
+responsive:true,
+maintainAspectRatio:false
+}
+}
+);
+
+new Chart(
+    document.getElementById('sportChart'),
+    {
+        type:'doughnut',
+        data:{
+            labels:labels,
+            datasets:[{
+
+               data:values,
+                backgroundColor:[
+                    '#3b82f6',
+                    '#22c55e',
+                    '#f59e0b'
+                ]
+            }]
+        }
+    }
+);
+
+
+
+
+
+
+</script>
+
+<h2>Record Personali</h2>
+
+<div class="grid">
+
+<div class="card">
+<div>🏃 Corsa più lunga</div>
+<div class="value">109.3 km</div>
+</div>
+
+<div class="card">
+<div>🚴 Bici più lunga</div>
+<div class="value">207.4 km</div>
+</div>
+
+<div class="card">
+<div>🏊 Nuoto più lungo</div>
+<div class="value">5.4 km</div>
+</div>
+
+<div class="card">
+<div>⛰️ Dislivello massimo</div>
+<div class="value">4948 m</div>
+</div>
+
+</div>
+
+</body>
+</html>
